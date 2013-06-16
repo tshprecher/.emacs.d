@@ -1,0 +1,6 @@
+[submodule "emacs-window-layout"]
+	path = emacs-window-layout
+	url = git://github.com/kiwanami/emacs-window-layout
+[submodule "emacs-window-manager"]
+	path = emacs-window-manager
+	url = git://github.com/kiwanami/emacs-window-manager
