@@ -1,3 +1,8 @@
+;; highlight current line
+(add-to-list 'load-path "~/.emacs.d/highlight-current-line")
+(require 'highlight-current-line)
+(highlight-current-line-on t)
+
 ;; *scala mode
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
 (require 'scala-mode-auto)
