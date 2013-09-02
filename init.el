@@ -1,5 +1,5 @@
 ;; * CEDET
-(load-file "~/.emacs.d/cedet/cedet-1.1/common/cedet.el")
+(load-file "~/.emacs.d/cedet/cedet-1.0pre6/common/cedet.el")
 (global-ede-mode 1)                     ; Enable the Project management system
 
 ;; * ecb
