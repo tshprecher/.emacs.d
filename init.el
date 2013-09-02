@@ -1,13 +1,18 @@
-;; *scala mode
+;; * ecb
+(add-to-list 'load-path
+	     "~/.emacs.d/ecb/ecb-2.40")
+(require 'ecb)
+
+;; * scala mode
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
 (require 'scala-mode-auto)
 
-;; *ruby mode
+;; * ruby mode
 (add-to-list 'load-path "~/.emacs.d/ruby-mode")
 (require 'ruby-mode)
 (setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
 
-;; *ediff
+;; * ediff
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (defun ediff-face-settings ()
