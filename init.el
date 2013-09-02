@@ -1,3 +1,7 @@
+;; * CEDET
+(load-file "~/.emacs.d/cedet/cedet-1.1/common/cedet.el")
+(global-ede-mode 1)                     ; Enable the Project management system
+
 ;; *scala mode
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
 (require 'scala-mode-auto)
