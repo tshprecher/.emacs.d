@@ -1,5 +1,4 @@
 ;; * CEDET
-;;(load-file "~/.emacs.d/cedet/cedet-1.0pre6/common/cedet.el")
 ;;(global-ede-mode 1)                     ; Enable the Project management system
 (require 'semantic)
 (require 'semantic/analyze)
@@ -19,6 +18,10 @@
 (require 'ecb)
 (setq stack-trace-on-error t)
 
+(setq ecb-layout-name "left13")
+(setq ecb-windows-width 30)
+(add-hook 'ecb-activate-hook (lambda () (global-set-key (kbd "C-c d") 'ecb-goto-window-directories)))
+(add-hook 'ecb-activate-hook (lambda () (global-set-key (kbd "C-c c") 'ecb-goto-window-edit-last)))
 (ecb-activate)
 (ecb-byte-compile)
 
