@@ -1,3 +1,8 @@
+;; standard options
+(column-number-mode)
+(setq-default fill-column 80)
+
+
 ;; * CEDET
 ;;(global-ede-mode 1)                     ; Enable the Project management system
 (require 'semantic)
@@ -33,6 +38,10 @@
 ;;(add-to-list 'load-path "~/.emacs.d/ruby-mode")
 ;;(require 'ruby-mode)
 ;;(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
+
+;; * rst mode
+(add-to-list 'load-path "~/.emacs.d/rst-mode")
+(require 'rst)
 
 ;; * ediff
 (setq ediff-split-window-function 'split-window-horizontally)
