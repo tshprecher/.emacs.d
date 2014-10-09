@@ -1,9 +1,11 @@
+;; TODO: rename to linemarker or something like that
+
 (eval-when-compile (require 'cl))
-(require 'highlight-current-line)
+;(require 'highlight-current-line)
 
-(defvar codemarker-warning-face 'secondary-selection)
+(defvar cm-warning-face 'secondary-selection)
 
-(defvar codemarker-error-face 'trailing-whitespace)
+(defvar cm-error-face 'trailing-whitespace)
 
 (defvar test-overlay (make-overlay 100 10))
 (overlay-put test-overlay 'face 'secondary-selection)
@@ -41,12 +43,12 @@
    :current-position current-position)
   )
 
-(defun cm:ring-goto-marker (ring position) 
+(defun cm:ring-goto-marker (ring index)
   (let* ((markers-list (cm:ring-markers-list ring))
 	 (len (length markers-list))
-	 (index (% (+ len position) len))
-	 (codemarker (nth index (cm:ring-markers-list ring))))
-    (goto-char (marker-position (cm:marker-marker codemarker)))
+	 (index (% (+ len index) len))
+	 (marker (nth index markers-list)))
+    (goto-char (marker-position (cm:marker-marker marker)))
     (move-beginning-of-line nil)
     (setf (cm:ring-current-position ring) index)
     )
@@ -57,7 +59,7 @@
   )
 
 (defun cm:ring-goto-previous (ring)
-  (cm:ring-goto-marker ring (1 (cm:ring-current-position ring) 1))
+  (cm:ring-goto-marker ring (- (cm:ring-current-position ring) 1))
   )
 
 (defun cm:ring-goto-beginning (ring)
@@ -68,13 +70,12 @@
   (cm:ring-goto-marker ring -1)
   )
 
-;; (defvar test-marker1 (cm:make-marker 'test1 100))
+(defvar test-marker1 (cm:make-marker 'test1 100))
+(defvar test-marker2 (cm:make-marker 'test2 150))
 
-;; (defvar test-marker2 (cm:make-marker 'test2 150))
+(defvar test-ring (cm:make-ring (list test-marker1 test-marker2) 0))
 
-;; (defvar test-ring (cm:make-ring (list test-marker1 test-marker2) 0))
-
-;; (cm:ring-goto-end test-ring)
+(cm:ring-goto-previous test-ring)
 
 
 (defun move-point-beginning (datamarker) 
@@ -87,7 +88,7 @@
     )
   )
 
-(defun set-line-face (face)
+(defun cm:set-line-face (face)
   (lexical-let ( (fce face) )
     (lambda ()
       (save-excursion
@@ -110,7 +111,7 @@
 	)))
   )
 
-(cm:mark-line nil 2 (make-cm:actions :on-create (set-line-face 'bold)))
+(cm:mark-line "message" 10 (make-cm:actions :on-create (cm:set-line-face 'bold)))
 
 ;; sandbox
 

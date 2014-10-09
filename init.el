@@ -1,16 +1,16 @@
 ;; highlight current line
 (add-to-list 'load-path "~/.emacs.d/highlight-current-line")
 (require 'highlight-current-line)
-(highlight-current-line-on t)
+;(highlight-current-line-on t)
 
 ;; *scala mode
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
 (require 'scala-mode-auto)
 
 ;; *ruby mode
-(add-to-list 'load-path "~/.emacs.d/ruby-mode")
-(require 'ruby-mode)
-(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
+;; (add-to-list 'load-path "~/.emacs.d/ruby-mode")
+;; (require 'ruby-mode)
+;; (setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
 
 ;; *ediff
 (setq ediff-split-window-function 'split-window-horizontally)
