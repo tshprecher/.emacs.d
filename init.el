@@ -17,6 +17,12 @@
 (provide 'semanticdb-mode)
 (provide 'semantic-load)
 
+;; * jdee
+(add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
+(autoload 'jde-mode "jde" "JDE mode." t)
+(setq auto-mode-alist
+      (append '(("\\.java\\'" . jde-mode)) auto-mode-alist))
+
 ;; * ecb
 (add-to-list 'load-path
 	     "~/.emacs.d/ecb/ecb-2.40-cedet-wrapper")
@@ -29,6 +35,8 @@
 (add-hook 'ecb-activate-hook (lambda () (global-set-key (kbd "C-c c") 'ecb-goto-window-edit-last)))
 (ecb-activate)
 (ecb-byte-compile)
+
+
 
 ;; * scala mode
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
