@@ -2,7 +2,6 @@
 (column-number-mode)
 (setq-default fill-column 80)
 
-
 ;; * CEDET
 ;;(global-ede-mode 1)                     ; Enable the Project management system
 (require 'semantic)
@@ -36,20 +35,19 @@
 (ecb-activate)
 (ecb-byte-compile)
 
-
-
-;; * scala mode
-(add-to-list 'load-path "~/.emacs.d/scala-mode/src")
-(require 'scala-mode-auto)
-
-;; * ruby mode
+;; * modes
+(add-to-list 'load-path "~/.emacs.d/pig-mode")
 ;;(add-to-list 'load-path "~/.emacs.d/ruby-mode")
-;;(require 'ruby-mode)
+(add-to-list 'load-path "~/.emacs.d/rst-mode")
+(add-to-list 'load-path "~/.emacs.d/scala-mode/src")
+
+
 ;;(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
 
-;; * rst mode
-(add-to-list 'load-path "~/.emacs.d/rst-mode")
+(require 'pig-mode)
+;;(require 'ruby-mode)
 (require 'rst)
+(require 'scala-mode-auto)
 
 ;; * ediff
 (setq ediff-split-window-function 'split-window-horizontally)
