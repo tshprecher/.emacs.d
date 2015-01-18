@@ -1,3 +1,7 @@
 # temp files
 *~
 *.elc
+
+# runtime directories
+semanticdb/
+elpa/

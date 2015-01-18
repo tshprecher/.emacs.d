@@ -1,6 +1,14 @@
 ;; standard options
 (column-number-mode)
+(line-number-mode)
 (setq-default fill-column 80)
+(setq-default scroll-step 1)              ; scroll one line at a time
+(setq-default indent-tabs-mode nil)       ; turn off tabs
+(setq-default cursor-type 'bar)
+
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+
+(load "~/.emacs.d/hop.el")
 
 ;; * CEDET
 ;;(global-ede-mode 1)                     ; Enable the Project management system
@@ -9,12 +17,16 @@
 (require 'semantic/sb)
 (require 'srecode)
 
-(provide 'semantic-analyze)
-(provide 'semantic-ctxt)
-(provide 'semanticdb)
-(provide 'semanticdb-find)
-(provide 'semanticdb-mode)
-(provide 'semantic-load)
+;; (provide 'semantic-analyze)
+;; (provide 'semantic-ctxt)
+;; (provide 'semanticdb)
+;; (provide 'semanticdb-find)
+;; (provide 'semanticdb-mode)
+;; (provide 'semantic-load)
+
+;; Set emacs background colour
+(set-background-color "red")
+(set-cursor-color "red")
 
 ;; * jdee
 (add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
@@ -60,11 +72,11 @@
 
   (set-face-background ediff-even-diff-face-A "red")
 
-;; new lines
+  ;; new lines
   (set-face-background ediff-odd-diff-face-B "medium sea green")
   (set-face-foreground ediff-odd-diff-face-B "black")
 
-;; removed lines
+  ;; removed lines
   (set-face-background ediff-odd-diff-face-A "indian red")
   (set-face-foreground ediff-odd-diff-face-A "black")
 )
