@@ -52,14 +52,17 @@
 ;;(add-to-list 'load-path "~/.emacs.d/ruby-mode")
 (add-to-list 'load-path "~/.emacs.d/rst-mode")
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
-
+(add-to-list 'load-path "~/.emacs.d/thrift-mode")
 
 ;;(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '("BUILD" . python-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".aurora$" . python-mode) auto-mode-alist))
 
 (require 'pig-mode)
 ;;(require 'ruby-mode)
 (require 'rst)
 (require 'scala-mode-auto)
+(require 'thrift-mode)
 
 ;; * ediff
 (setq ediff-split-window-function 'split-window-horizontally)
