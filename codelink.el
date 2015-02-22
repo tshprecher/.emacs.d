@@ -1,51 +1,61 @@
 ;; open browser to supported web ui view of file
 (require 'cl)
 
-(setq cl-browser-bin "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome")
+;; ***** ABSTRACT REPO *****
 
-(defvar cl-browser-bin2 "/Applications")
-
-;; (shell-command (concat "ls" "\\" cl-browser-bin))
-
-(let ((process-connection-type nil))  ; use a pipe
-  (start-process "my-process2" "foo" "ls" "-l" "/bin"))
-
-(defun cl-browser-open (url)
-  (shell-command (concat cl-browser-bin " " url "& disown")))
-
-
-;; ***** ABSTRACT REPO REGISTRY *****
-  (defclass my-baseclass ()
-        ((slot-A :initarg :slot-A)
-         (slot-B :initarg :slot-B))
-       "My Baseclass.")
-
-
-(defclass cl-registry ()
+(defclass cl-repo ()
   ((name
     :initarg   :name
-    :accessor  get-name)
+    :accessor  cl-repo-name)
 
-   (server  :initarg :server)
-   (dirs    :initarg :dirs))
-  "Abstract codelink registry")
+   (server
+    :initarg   :server
+    :accessor  cl-repo-server)
 
-;; TODO document the last two as optional
-(defmethod cl-registry-goto-link (filename line branch)
-  nil)
+   (dir
+    :initarg   :dir
+    :accessor  cl-repo-dir))
+
+  "abstract repo registry")
+
+;; TODO: document the last two as optional
+(defmethod cl-repo-goto-link (
+  (repo cl-repo)
+  filename
+  line
+  branch)
+
+  "abstract definition of goto-link method")
 
 ;; **********************************
 
-;; ***** CGIT REGISTRY **************
+;; ********* CGIT REPO ************
 
-(defclass cl-cgit-registry (cl-registry) ())
+(defclass cl-cgit-repo (cl-repo) ())
 
-(defun cl-make-cgit-registry (name server dirs)
-  (make-instance 'cl-cgit-registry :name name :server server :dirs dirs))
+(defun cl-make-cgit-repo (name server dir)
+  (make-instance 'cl-cgit-repo :name name :server server :dir (expand-file-name dir)))
 
-(defmethod cl-cgit-registry-goto-link (filename line branch)
-  (cl-browser-open "www.testing.com")) ;; TODO: fix dummy endpoint for now
 
-(setq test-reg (cl-make-cgit-registry "name" "hostnam" "dirs"))
+;; TODO: integrate branch
+(defmethod cl-cgit-repo-goto-link ((repo cl-cgit-repo) filename line branch)
+;; https://cgit.twitter.biz/twitter/tree/config/api/special_clients.yml#n59
+  (browse-url
+   (format
+    "https://%s/%s/tree/%s%s"
+    (cl-repo-server repo)
+    (cl-repo-name repo)
+    filename
+    (if (not (eq line nil))
+        (format "#n%d" line)
+      ""))))
 
-(get-name test-reg)
+;; debugging zone
+
+(expand-file-name "/Applications/Google\\ Chrome.app/Contents/MacOS/")
+(setq twitter-repo (cl-make-cgit-repo "twitter" "cgit.twitter.biz" "~/workspace/twitter"))
+(cl-cgit-repo-goto-link twitter-repo "config/api/special_clients.yml" 12 nil)
+
+;; (expand-file-name "~")
+;; (setq test-reg (cl-make-cgit-registry "name" "hostname" "dirs"))
+;; (get-name test-reg)
