@@ -8,6 +8,7 @@
 
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 
+;; TODO: use (provide 'symbol)
 (load "~/.emacs.d/hop.el")
 
 ;; * CEDET
@@ -16,6 +17,8 @@
 (require 'semantic/analyze)
 (require 'semantic/sb)
 (require 'srecode)
+
+(load "~/.emacs.d/codelink.el")
 
 ;; (provide 'semantic-analyze)
 ;; (provide 'semantic-ctxt)
@@ -99,3 +102,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; * load local config
+(load "~/.local.el")

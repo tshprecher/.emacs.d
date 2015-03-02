@@ -6,24 +6,21 @@
 ;; Opens a link pointing to the line of the current file. If the file is registered
 ;; under multiple repos, then the first one in the global registry list is used.
 ;; TODO: handle branch logic
-
-(defun cl-goto-link ()
+(defun cl-goto-current-position ()
   (interactive)
   (let* ((filename (buffer-file-name (current-buffer)))
          (repo (car
                 (delq nil (mapcar (lambda (r)
-                                 (if (not (string-prefix-p (cl-repo-dir r) filename))
-                                     nil
-                                   r))
-                                 cl-global-registry-list)))))
+                                    (if (not (string-prefix-p (cl-repo-dir r) filename))
+                                        nil
+                                      r))
+                                  cl-global-registry-list)))))
     (if (not repo)
-        nil
-;; TODO: remove      (list filename (cl-repo-dir repo) (substring filename (length (cl-repo-dir repo)))))))
+        (message "repository not found.")
       (cl-repo-goto-link
        repo
        (substring filename (length (cl-repo-dir repo)))
-       (line-number-at-pos)
-       nil))))
+       (line-number-at-pos)))))
 
 ;; abstract repo
 
@@ -40,14 +37,13 @@
 
   "abstract repo registry")
 
-;; TODO: document the last two as optional
-(defmethod cl-repo-goto-link (
-  (repo cl-repo)
-  filename
-  line
-  branch)
+;; TODO: make line optional
+;; TODO: add param for branch
+(defmethod cl-repo-goto-link ((repo cl-repo) filename line)
+  (browse-url (cl-repo-get-link repo filename line)))
 
-  "abstract definition of goto-link method")
+(defmethod cl-repo-get-link ((repo cl-repo) filename line)
+  "abstract definition of get-link method")
 
 ;; cgit repo
 (defclass cl-cgit-repo (cl-repo) ())
@@ -55,32 +51,30 @@
 (defun cl-make-cgit-repo (name server dir)
   (make-instance 'cl-cgit-repo :name name :server server :dir (expand-file-name dir)))
 
-;; TODO: integrate branch
-(defmethod cl-repo-goto-link ((repo cl-cgit-repo) filename line branch)
+(defmethod cl-repo-get-link ((repo cl-cgit-repo) filename line)
 ;; https://cgit.twitter.biz/twitter/tree/config/api/special_clients.yml#n59
-  (browse-url
-   (format
-    "https://%s/%s/tree/%s%s"
-    (cl-repo-server repo)
-    (cl-repo-name repo)
-    filename
-    (if (not (eq line nil))
-        (format "#n%d" line)
-      ""))))
+  (format
+   "https://%s/%s/tree/%s%s"
+   (cl-repo-server repo)
+   (cl-repo-name repo)
+   filename
+   (if (not (eq line nil))
+       (format "#n%d" line)
+     "")))
 
-;; debugging zone
+;; github repo
+(defclass cl-github-repo (cl-repo) ())
 
+(defun cl-make-github-repo (name server dir)
+  (make-instance 'cl-github-repo :name name :server server :dir (expand-file-name dir)))
 
-(setq twitter-repo (cl-make-cgit-repo "twitter" "cgit.twitter.biz" "~/workspace/twitter"))
-(setq test-repo (cl-make-cgit-repo "localemacs" "cgit.local" "~/.emacs.d/"))
-
-;;(cl-cgit-repo-goto-link twitter-repo "config/api/special_clients.yml" 12 nil)
-(setq cl-global-registry-list (list test-repo))
-
-(string-prefix-p "/Users/tshprecher/workspace/.emacs.d/" "/Users/tshprecher/.emacs.d/codelink.el")
-
-
-(cl-goto-link)
-;; (expand-file-name "/Applications/Google\\ Chrome.app/Contents/MacOS/")
-;; (setq test-reg (cl-make-cgit-registry "name" "hostname" "dirs"))
-;; (get-name test-reg)
+(defmethod cl-repo-get-link ((repo cl-github-repo) filename line)
+;; https://github.com/twitter/joauth/blob/master/.travis.yml#L3
+  (format
+   "https://%s/%s/blob/master/%s%s"
+   (cl-repo-server repo)
+   (cl-repo-name repo)
+   filename
+   (if (not (eq line nil))
+       (format "#L%d" line)
+     "")))
