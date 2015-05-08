@@ -5,7 +5,6 @@
 
 ;; Opens a link pointing to the line of the current file. If the file is registered
 ;; under multiple repos, then the first one in the global registry list is used.
-;; TODO: handle branch logic
 (defun cl-goto-current-position ()
   (interactive)
   (let* ((filename (buffer-file-name (current-buffer)))
@@ -37,8 +36,6 @@
 
   "abstract repo registry")
 
-;; TODO: make line optional
-;; TODO: add param for branch
 (defmethod cl-repo-goto-link ((repo cl-repo) filename line)
   (browse-url (cl-repo-get-link repo filename line)))
 
@@ -46,13 +43,13 @@
   "abstract definition of get-link method")
 
 ;; cgit repo
+
 (defclass cl-cgit-repo (cl-repo) ())
 
 (defun cl-make-cgit-repo (name server dir)
   (make-instance 'cl-cgit-repo :name name :server server :dir (expand-file-name dir)))
 
 (defmethod cl-repo-get-link ((repo cl-cgit-repo) filename line)
-;; https://cgit.twitter.biz/twitter/tree/config/api/special_clients.yml#n59
   (format
    "https://%s/%s/tree/%s%s"
    (cl-repo-server repo)
@@ -63,13 +60,13 @@
      "")))
 
 ;; github repo
+
 (defclass cl-github-repo (cl-repo) ())
 
 (defun cl-make-github-repo (name server dir)
   (make-instance 'cl-github-repo :name name :server server :dir (expand-file-name dir)))
 
 (defmethod cl-repo-get-link ((repo cl-github-repo) filename line)
-;; https://github.com/twitter/joauth/blob/master/.travis.yml#L3
   (format
    "https://%s/%s/blob/master/%s%s"
    (cl-repo-server repo)
