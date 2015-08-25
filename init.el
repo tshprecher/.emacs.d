@@ -28,8 +28,8 @@
 ;; (provide 'semantic-load)
 
 ;; Set emacs background colour
-(set-background-color "red")
-(set-cursor-color "red")
+;; (set-background-color "red")
+;; (set-cursor-color "red")
 
 ;; * jdee
 (add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
@@ -51,7 +51,10 @@
 (ecb-byte-compile)
 
 ;; * modes
+(require 'protobuf-mode)
+
 (add-to-list 'load-path "~/.emacs.d/pig-mode")
+(add-to-list 'load-path "~/.emacs.d/protobuf-mode")
 ;;(add-to-list 'load-path "~/.emacs.d/ruby-mode")
 (add-to-list 'load-path "~/.emacs.d/rst-mode")
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
@@ -60,6 +63,8 @@
 ;;(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '("BUILD" . python-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".aurora$" . python-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".mesos$" . python-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".proto$" . protobuf-mode) auto-mode-alist))
 
 (require 'pig-mode)
 ;;(require 'ruby-mode)
