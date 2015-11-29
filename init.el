@@ -51,16 +51,19 @@
 (ecb-byte-compile)
 
 ;; * modes
+(add-to-list 'load-path "~/.emacs.d/go-mode")
 (add-to-list 'load-path "~/.emacs.d/pig-mode")
 ;;(add-to-list 'load-path "~/.emacs.d/ruby-mode")
 (add-to-list 'load-path "~/.emacs.d/rst-mode")
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
 (add-to-list 'load-path "~/.emacs.d/thrift-mode")
 
+
 ;;(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '("BUILD" . python-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".aurora$" . python-mode) auto-mode-alist))
 
+(require 'go-mode-autoloads)
 (require 'pig-mode)
 ;;(require 'ruby-mode)
 (require 'rst)
