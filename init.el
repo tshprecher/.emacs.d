@@ -28,8 +28,8 @@
 ;; (provide 'semantic-load)
 
 ;; Set emacs background colour
-(set-background-color "red")
-(set-cursor-color "red")
+;;(set-background-color "red")
+;;(set-cursor-color "red")
 
 ;; * jdee
 (add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
