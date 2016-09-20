@@ -109,4 +109,4 @@
  )
 
 ;; * load local config
-(load "~/.local.el")
+;;(load "~/.local.el")
