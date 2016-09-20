@@ -73,7 +73,7 @@
 (require 'yaml-mode)
 
 ;; * ediff
-(setq ediff-split-window-function 'split-window-horizontally)
+;;(setq ediff-split-window-function 'split-window-horizontally)
 
 (defun ediff-face-settings ()
   (set-face-foreground ediff-current-diff-face-A "blue")
