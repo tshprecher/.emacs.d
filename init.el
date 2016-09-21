@@ -57,6 +57,7 @@
 (add-to-list 'load-path "~/.emacs.d/rst-mode")
 (add-to-list 'load-path "~/.emacs.d/scala-mode/src")
 (add-to-list 'load-path "~/.emacs.d/thrift-mode")
+(add-to-list 'load-path "~/.emacs.d/yaml-mode")
 
 
 ;;(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
@@ -69,6 +70,7 @@
 (require 'rst)
 (require 'scala-mode-auto)
 (require 'thrift-mode)
+(require 'yaml-mode)
 
 ;; * ediff
 (setq ediff-split-window-function 'split-window-horizontally)
